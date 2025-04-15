@@ -1,0 +1,96 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import SelectInput from './SelectInput';
+import FileInput from './FileInput';
+import Input from './Input';
+
+
+const MultiInput = ({inputs,name}) => {
+  const [inputData, setInputData] = useState({});
+  const [selecterData, setSelecterData] = useState({});
+  const [imgFileData, setImgFileData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [callCreateV2, setCallCreateV2] = useState(false);
+  const [all, setAll] = useState({});
+  
+  const handleInputChange = (key, value) => {
+    setInputData(prev => ({ ...prev, [key]: value }));
+        setAll(prev => ({ ...prev, [key]: value }));
+
+  };
+
+  const handleSelectChange = (key, value) => {
+    setSelecterData(prev => ({ ...prev, [key]: value }));
+        setAll(prev => ({ ...prev, [key]: value }));
+
+  };
+
+  const handleFileChange = (key, value) => {
+    setImgFileData(prev => ({ ...prev, [key]: value }));
+    setAll(prev => ({ ...prev, [key]: value }));
+    setCallCreateV2(true);
+  };
+  
+  useEffect(()=>{
+ //   setAll({...inputData,...selecterData,...imgFileData})
+   alert(JSON.stringify(all));
+  },[inputData,selecterData,imgFileData])
+  
+  
+  return (
+    <>
+
+          <div className="rounded-sm min-w-full border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+              <div className="p-6.5">
+                <div className="mb-4.5 flex flex-col gap-6 md:flex-row md:flex-wrap2 xl:flex-row">
+                  {inputs?.map((element, index) => {
+                    switch (element.type) {
+                      case 'text':
+                        return (
+                          <Input
+                            key={index}
+                            label={element.name}
+                            className="w-1/2"
+                            placeholder="Enter value"
+                            value={inputData[element.name] || ''}
+                            onChange={(e) => handleInputChange(element.name, e.target.value)}
+                            disabled={false}
+                          />
+                        );
+                      case 'option':
+                        return (
+                          <SelectInput
+                            key={index}
+                            setSelecter={handleSelectChange}
+                            optionValue={element.valueBy}
+                            name={element.name}
+                            optionShowBy={element.optionBy}
+                            url={element.url}
+                            selectedValue={selecterData[element.name] || ''}
+                          />
+                        );
+                      case 'file':
+                        return (
+                          <FileInput
+                            key={index}
+                            onChange={(e)=>handleFileChange(element.name,event.target.files[0])}
+                            label={element.name}
+                          />
+                        );
+
+                      default:
+                        return <div key={index}>Unsupported input type</div>;
+                    }
+                  })}
+                </div>
+              
+              </div>
+
+          </div>
+        
+    
+    </>
+  );
+}
+
+export default MultiInput

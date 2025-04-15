@@ -1,0 +1,55 @@
+import React,{useState} from 'react'
+//import cimg from "../../images/cards/cards-03.png"
+const FileInput = ({onChange,label,multiple}) => {
+    
+const [selectedFile, setSelectedFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState([]);
+
+  const handleFileChange = (e) => {
+  
+     const file = e.target.files;
+     
+     /*
+    const x=  file.map((item,index)=>{
+          return   URL.createObjectURL(item)  // Create a preview URL
+
+       })
+     */
+     console.log(file);
+    if (file) {
+     // setImagePreview([URL.createObjectURL(file)]);  // Create a preview URL
+    }
+
+  };
+  return (
+                 <div className="py-3 md:max-w-[45%]">
+                <label className="mb-3 block text-black dark:text-white">
+                  {label}
+                </label>
+            { multiple ?
+            <input
+                  type="file"
+                  multiple
+                  onChange={(e)=>{onChange(e);handleFileChange(e)}}
+                  className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:py-1 file:px-2.5 file:text-sm focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
+                />
+                :<input
+                  type="file"
+                  onChange={(e)=>{onChange(e);handleFileChange(e)}}
+                  className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:py-1 file:px-2.5 file:text-sm focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
+                />
+            }
+                <div className="flex  md:max-w-full  w-full overflow-scroll">
+                
+                {imagePreview.map((element,index)=>(
+                  
+              imagePreview[index] && <img src={element} className="w-full rounded-md border border-stroke p-3 mt-2 ml-3  outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:py-1 file:px-2.5 file:text-sm focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"/>
+              
+                  ))}
+              </div>
+              
+              </div>
+  )
+}
+
+export default FileInput
