@@ -1,0 +1,99 @@
+import MultiInput from '../components/InputsX/MultiInput';
+import Update from '../pages/Update';
+import Page_ from '../pages/Page';
+import Create from '../pages/Create';
+import DataDisplay from '../pages/DataDisplay';
+
+const RolePermissionDisplay = [
+{
+      path: "/role-permissions/display/:id",
+      pageName: "_",
+      page: <DataDisplay
+        pageName=""
+        url={"http://localhost:5000/api/role-permissions/"}
+        title={"eCommerce Dashboard | create role-permissions "}
+        
+      />,
+
+
+    }
+];
+
+const RolePermission = [
+  [
+    {
+      path: "/role-permissions",
+      pageName: "role-permissions",
+      title:"role-permissions",
+      page: <Page_
+        pageName={"role-permissions"}
+        url={"http://localhost:5000/api/role-permissions/"}
+        title={"eCommerce Dashboard | create role-permissions "}
+        felds={[{ inputTypy: "text" }]}
+
+
+      />,
+
+
+    },
+    {
+      path: "/role-permissions/create",
+      pageName: "Rolls",
+      url: "http://localhost:5000/api/role-permissions/",
+      title: "eCommerce Dashboard | create role-permissions ",
+      felds: [{ inputTypy: "text" }],
+      page: <Create
+        pageName={"role-permissions"}
+        
+        url="http://localhost:5000/api/role-permissions/"
+        inputs={[
+          { type: "number", name: "role_id" },
+          { type: "number", name: "permission_id" },
+          { type: "number", name: "created_by" },
+
+        ]}
+
+      />,
+    },
+    {
+
+      path: "/role-permissions/update/:id",
+      pageName: "role-permissions",
+      url: "http://localhost:5000/api/role-permissions/",
+      title: "eCommerce Dashboard | create role-permissions ",
+      felds: [{ inputTypy: "text" }],
+      page: <Update
+
+        name="role-permissions"
+        url="http://localhost:5000/api/role-permissions/"
+        inputs={[
+          { type: "number", name: "role_id" },
+          { type: "number", name: "permission_id" },
+          { type: "number", name: "created_by" },
+
+        ]}
+
+      />,
+    },
+...RolePermissionDisplay
+  ],
+  ///DataDisplay user
+];
+
+
+
+
+export {RolePermission}
+
+
+
+
+//docs
+/*
+
+
+
+
+
+
+*/

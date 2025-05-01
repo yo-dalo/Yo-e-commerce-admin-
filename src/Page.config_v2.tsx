@@ -4,12 +4,18 @@ import Page_ from './pages/Page';
 import Create from './pages/Create';
 import DataDisplay from './pages/DataDisplay';
 import {User} from './PageConfig/User.conf';
+import {Admin} from './PageConfig/Admin.conf';
+import {Permission} from './PageConfig/Permissions.conf';
+import {RolePermission} from './PageConfig/RolePermissions.conf';
 
 
 
 const Page = [
   //User
  ...User,
+ ...Admin,
+ ...Permission,
+ ...RolePermission,
   ///roles
   [
     {
