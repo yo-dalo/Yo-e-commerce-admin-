@@ -4,7 +4,7 @@ import InputTextArea from '../components/InputsX/InputTextArea';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
 import FileInput from '../components/InputsX/FileInput';
 import SelectInput from '../components/InputsX/SelectInput';
 import Input from '../components/InputsX/Input';
@@ -24,10 +24,10 @@ const Update = ({ url, inputs, pageName = "Form Layout" }) => {
   useEffect(() => {
     axios.get(`${url}`+id)
       .then((res) => {
-      alert(JSON.stringify(res.data.data))
+     // alert(JSON.stringify(res.data.data))
       setAllData(res.data.data)
       setInputData(res.data.data)
-        console.log("Fetched Data:", res.data.data);
+       // console.log("Fetched Data:", res.data.data);
       })
       .catch((err) => {
         alert("Error fetching data");
@@ -71,7 +71,7 @@ const handleMulti = (key, value) => {
           },
         });
       } else {
-        alert(JSON.stringify( {...allData, ...inputData, ...selecterData, ...imgFileData }));
+        //alert(JSON.stringify( {...allData, ...inputData, ...selecterData, ...imgFileData }));
         await axios.put(url+id, {...allData, ...inputData, ...selecterData, ...imgFileData });
       }
 

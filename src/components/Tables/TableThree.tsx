@@ -63,7 +63,7 @@ const TableThree = () => {
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p
+                  <p 
                     className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
                       packageItem.status === 'Paid'
                         ? 'bg-success text-success'

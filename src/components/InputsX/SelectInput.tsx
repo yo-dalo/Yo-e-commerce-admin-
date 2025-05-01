@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import axios from "axios";
 
-const SelectInput: React.FC = ({url,name,optionShowBy,optionValue,setSelecter,selectedValue,toLink,error}) => {
+const SelectInput: React.FC = ({url,name,optionShowBy,optionValue,setSelecter,selectedValue,error,linkTo,linkToValue}) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [errorX, setErrorX] = useState([]);
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
@@ -21,21 +21,50 @@ const SelectInput: React.FC = ({url,name,optionShowBy,optionValue,setSelecter,se
       setResData(res.data.data);
     // alert(JSON.stringify(res.data.data))
     }).catch((err)=>{
-    //  alert("err")
+
      // alert(JSON.stringify(err))
     })
   }
+  
+  const getDataByToLink =()=>{
+      setResData([]);
+      axios.get(url+"/"+linkToValue).then((res)=>{
+      setResData(res.data.data);
+    // alert(JSON.stringify(res.data.data))
+    }).catch((err)=>{
+
+     // alert(JSON.stringify(err))
+    })
+  }
+  
+  
+  
+  
   useEffect(() => {
+    setSelectedOption("")
+    if(linkTo){
+      getDataByToLink()
+    }else{
     getData()
-  }, [])
+    }
+  }, [linkToValue])
   
   
   useEffect(() => {
     setSelectedOption(selectedValue)
   }, [selectedValue])
+  
   useEffect(() => {
     setSelecter(name,selectedOption)
   }, [selectedOption])
+  
+  
+  
+  
+  
+  
+  
+  
   useEffect(() => {
     const addOrReplaceError = (index, newItem) => {
     setErrorX((prevItems) => {
@@ -55,15 +84,7 @@ const SelectInput: React.FC = ({url,name,optionShowBy,optionValue,setSelecter,se
   
   
   
-  /*
-   if (!toLink[Object.keys(toLink)[0]]) {
-     addOrReplaceItem(0,{ error: true, message: `Please fast select ${Object.keys(toLink)[0]}` })
-  }else{
-    addOrReplaceItem(0,{ error: false, message: ` ${Object.keys(toLink)[0]} is selected ` })
 
-  }
-  */
-  //alert(error[0].message)
   
   }, [error])
   
@@ -73,9 +94,13 @@ const SelectInput: React.FC = ({url,name,optionShowBy,optionValue,setSelecter,se
 
   return (
     <div className="mb-1 ">
+{linkTo}
+{linkToValue}
+
       <name className="mb-2.5 block text-black dark:text-white">
         {' '}
         {name?.split("_")?.join(" ")}
+
       </name>
 
       <div className="relative z-20 bg-transparent dark:bg-form-input">

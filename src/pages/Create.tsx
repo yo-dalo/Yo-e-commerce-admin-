@@ -172,6 +172,7 @@ const Create = ({ url, inputs, pageName = "Form Layout" }) => {
                             disabled={false}
                           />
                         );
+                        
                       case 'option':
                         return (
                           <SelectInput
@@ -182,7 +183,8 @@ const Create = ({ url, inputs, pageName = "Form Layout" }) => {
                             optionShowBy={element.optionBy}
                             url={element.url}
                             selectedValue={selecterData[element.name] || ''}
-                            toLink={{[element.toLink]:selecterData[element.toLink]}||{}}
+                            linkTo={element.toLink}
+                            linkToValue={selecterData[element.toLink]||''}
                             error=
                             {
                               [
@@ -202,6 +204,7 @@ const Create = ({ url, inputs, pageName = "Form Layout" }) => {
                             
                           />
                         );
+                        
                       case 'file':
                         return (
                         <FileInput

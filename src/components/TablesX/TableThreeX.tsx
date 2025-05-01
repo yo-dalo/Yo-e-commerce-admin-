@@ -7,6 +7,10 @@ import { useEffect, useState } from 'react';
 import Axios from "axios"
 import { Link ,useParams} from 'react-router-dom';
 import isImage from "../../common/Helper/IsImage"
+import { toast } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
+
+
 
 const packageData: Package[] = [
   {
@@ -38,6 +42,20 @@ const packageData: Package[] = [
 
 
 const TableThreeX = ({url}) => {
+  
+  
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+
+  // Example: get a query param
+  const pageNumber = queryParams.get('page')?queryParams.get('page'):1;
+  
+  
+  
+  
+  
+  
+  
   const { id } = useParams();
        const data=[
     {
@@ -55,20 +73,20 @@ const TableThreeX = ({url}) => {
   useEffect(() => {
   const source = Axios.CancelToken.source();
   setLoading(true);
-  Axios.get(url, { cancelToken: source.token })
+  Axios.get(url+"?page="+pageNumber, { cancelToken: source.token })
     .then((res) => {
       if (res.data.data && res.data.data.length > 0) {
         setKeyArryX(Object.keys(res.data.data[0]));
         setDataX(res.data.data);
       } else {
-        console.error("No data found");
-        alert("No data available.");
+        toast.error("No data found");
+        
+        setDataX([]);
       }
     })
     .catch((err) => {
       if (!Axios.isCancel(err)) {
-        console.error("Error fetching data:", err);
-        alert("An error occurred while fetching data. Please try again.");
+        toast.error("An error occurred while fetching data. Please try again.");
       }
     })
     .finally(() => {
@@ -78,7 +96,7 @@ const TableThreeX = ({url}) => {
   return () => {
     source.cancel("Component unmounted, request canceled.");
   };
-}, [url, updata]);
+}, [url, updata,pageNumber]);
     
  
  const delete_i = (id)=>{
@@ -120,13 +138,14 @@ const TableThreeX = ({url}) => {
           <tbody>
             {dataX?.map((packageItem, key) => (
                 <tr key={key}>
-                  <TableTd text_1={key} />
+                 <TableTd text_1={(Number(pageNumber) - 1) * 10 + (key + 1)} />
                   {keyArryX?.map((element, index) => (
                     typeof packageItem[element] === 'string' && isImage(packageItem[element])
-                      ? <TdImg key={index} src={packageItem[element]  || "......loding" }  />
+                      ? <TdImg key={index} src={`http://localhost:5000/uploads/` + packageItem[element]  || "......loding" }  />
                       : <TableTd key={index} text_1={packageItem[element] || '-'} />
                   ))}
                   <TebletAction 
+                    more_info_url={`display/${packageItem["id"]}`}
                     delete_url={() => delete_i(packageItem["id"])} 
                     update_url={`update/${packageItem["id"]}`} 
                     />
