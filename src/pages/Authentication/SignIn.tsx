@@ -6,6 +6,10 @@ import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 import Axios from 'axios';
 import { useAuth } from "../../context/AuthContext";
+import Yo from "../../common/Helper/Yo";
+
+
+
 
 
 const SignIn: React.FC = () => {
@@ -18,7 +22,7 @@ const handleFormData = (key,value)=>{
   
  const handleSubmit = async (e)=>{
    e.preventDefault();
-   await Axios.post("./login",formData).then((res)=>{
+   await Yo.post("./login",formData).then((res)=>{
      console.log(res);
    }).catch((err)=>{
      console.log(err);
