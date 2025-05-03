@@ -3,6 +3,7 @@ import Update from '../pages/Update';
 import Page_ from '../pages/Page';
 import Create from '../pages/Create';
 import DataDisplay from '../pages/DataDisplay';
+import SelectRoleParmitions from '../components/PartX/SelectRoleParmitions';
 
 const AdminDisplay = [
 {
@@ -43,9 +44,13 @@ const Admin = [
       title: "eCommerce Dashboard | create admins ",
       felds: [{ inputTypy: "text" }],
       page: <Create
+          
+      
+      /// children={<SelectRoleParmitions onPermissionChange={(permissions) => handleMulti("permissions", permissions)} />}
+      
         pageName={"admins"}
-        
-        url="http://localhost:5000/api/admins/"
+       // url="http://localhost:5000/api/admins/"
+       url="http://localhost:5000/api/admin-auth/register/"
         inputs={[
           { type: "text", name: "name" },
           { type: "text", name: "password" },
@@ -59,6 +64,32 @@ const Admin = [
 
       />,
     },
+    
+    {
+      path: "/admins/login",
+      pageName: "Rolls",
+      url: "http://localhost:5000/api/admins/",
+      title: "eCommerce Dashboard | create admins ",
+      felds: [{ inputTypy: "text" }],
+      page: <Create
+          
+      
+      /// children={<SelectRoleParmitions onPermissionChange={(permissions) => handleMulti("permissions", permissions)} />}
+      
+        pageName={"admins"}
+        url="http://localhost:5000/api/admin-auth/login/"
+      // url="http://localhost:5000/api/admin-auth/register/"
+        inputs={[
+          { type: "text", name: "phoneOrEmail" },
+          { type: "number", name: "password" },
+
+        ]}
+
+      />,
+    },
+    
+    
+    
     {
 
       path: "/admins/update/:id",

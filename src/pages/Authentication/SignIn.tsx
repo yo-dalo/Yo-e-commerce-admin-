@@ -13,7 +13,7 @@ import Yo from "../../common/Helper/Yo";
 
 
 const SignIn: React.FC = () => {
-  const {user} =useAuth;
+  const {admin,login} =useAuth();
   const [formData, setFormData] = useState({});
   
 const handleFormData = (key,value)=>{
@@ -22,11 +22,7 @@ const handleFormData = (key,value)=>{
   
  const handleSubmit = async (e)=>{
    e.preventDefault();
-   await Yo.post("./login",formData).then((res)=>{
-     console.log(res);
-   }).catch((err)=>{
-     console.log(err);
-   })
+   login(formData);
   }
   
   
@@ -36,7 +32,7 @@ const handleFormData = (key,value)=>{
   return (
     <>
       <Breadcrumb pageName="Sign In" />
-    
+{admin.name}
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
@@ -187,14 +183,14 @@ const handleFormData = (key,value)=>{
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Email
+                    Email Or Phone 
                   </label>
                   <div className="relative">
                     <input
-                     onChange={(e)=>handleFormData("email",e.target.value)}
+                     onChange={(e)=>handleFormData("phoneOrEmail",e.target.value)}
                       value={formData.email}
-                      name="email"
-                      type="email"
+                      name="phoneOrEmail"
+                      type="text"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />

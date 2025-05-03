@@ -7,6 +7,7 @@ import {User} from './PageConfig/User.conf';
 import {Admin} from './PageConfig/Admin.conf';
 import {Permission} from './PageConfig/Permissions.conf';
 import {RolePermission} from './PageConfig/RolePermissions.conf';
+import {Role} from './PageConfig/Role.conf';
 
 
 
@@ -16,72 +17,75 @@ const Page = [
  ...Admin,
  ...Permission,
  ...RolePermission,
+...Role,
+ 
   ///roles
-  [
-    {
-      path: "/roles",
-      pageName: "Rolls",
-      title:"Rolls",
-      page: <Page_
-        pageName={"Rolls"}
-        url={"http://localhost:5000/api/roles/"}
-        title={"eCommerce Dashboard | create roles "}
-        felds={[{ inputTypy: "text" }]}
-
-
-      />,
-
-
-    },
-    {
-      path: "/roles/create",
-      pageName: "Rolls",
-      url: "http://localhost:5000/api/roles/",
-      title: "eCommerce Dashboard | create roles ",
-      felds: [{ inputTypy: "text" }],
-      page: <Create
-        pageName={"Rolls"}
-        
-        url="http://localhost:5000/api/roles/"
-        inputs={[
-          { type: "text", name: "role_name" },
-          { type: "text-area", name: "Number" },
-          { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption", valueBy: "value", optionBy: "status" },
-          {
-            type: "multiInputs", name: "item", inputs:
-              [
-                { type: "text", name: "role_name" },
-                { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption", valueBy: "value", optionBy: "status" },
-                { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption", valueBy: "value", optionBy: "status" },
-              ],
-
-          },
-
-
-        ]}
-
-      />,
-    },
-    {
-
-      path: "/roles/update/:id",
-      pageName: "Rolls",
-      url: "http://localhost:5000/api/roles/",
-      title: "eCommerce Dashboard | create roles ",
-      felds: [{ inputTypy: "text" }],
-      page: <Update
-
-        name="Rolls"
-        url="http://localhost:5000/api/roles/"
-        inputs={[
-          { type: "text", name: "role_name" },
-          //    {type:"file",  name:"role_name"},
-          { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption/", valueBy: "value", optionBy: "status" },
-        ]}
-
-      />,
-    },
-  ],
+  
+//   [
+//     {
+//       path: "/roles",
+//       pageName: "Rolls",
+//       title:"Rolls",
+//       page: <Page_
+//         pageName={"Rolls"}
+//         url={"http://localhost:5000/api/roles/"}
+//         title={"eCommerce Dashboard | create roles "}
+//         felds={[{ inputTypy: "text" }]}
+// 
+// 
+//       />,
+// 
+// 
+//     },
+//     {
+//       path: "/roles/create",
+//       pageName: "Rolls",
+//       url: "http://localhost:5000/api/roles/",
+//       title: "eCommerce Dashboard | create roles ",
+//       felds: [{ inputTypy: "text" }],
+//       page: <Create
+//         pageName={"Rolls"}
+//         
+//         url="http://localhost:5000/api/roles/"
+//         inputs={[
+//           { type: "text", name: "role_name" },
+//           { type: "text-area", name: "Number" },
+//           { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption", valueBy: "value", optionBy: "status" },
+//           {
+//             type: "multiInputs", name: "item", inputs:
+//               [
+//                 { type: "text", name: "role_name" },
+//                 { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption", valueBy: "value", optionBy: "status" },
+//                 { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption", valueBy: "value", optionBy: "status" },
+//               ],
+// 
+//           },
+// 
+// 
+//         ]}
+// 
+//       />,
+//     },
+//     {
+// 
+//       path: "/roles/update/:id",
+//       pageName: "Rolls",
+//       url: "http://localhost:5000/api/roles/",
+//       title: "eCommerce Dashboard | create roles ",
+//       felds: [{ inputTypy: "text" }],
+//       page: <Update
+// 
+//         name="Rolls"
+//         url="http://localhost:5000/api/roles/"
+//         inputs={[
+//           { type: "text", name: "role_name" },
+//           //    {type:"file",  name:"role_name"},
+//           { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption/", valueBy: "value", optionBy: "status" },
+//         ]}
+// 
+//       />,
+//     },
+//   ],
   //categories
   [
     {
@@ -677,20 +681,20 @@ const Page = [
 
 
     },
-    {
-      path: "/roles/display/:id",
-      pageName: "_",
-      page: <DataDisplay
-        pageName=""
-        url={"http://localhost:5000/api/roles/"}
-        title={"eCommerce Dashboard | create item-variants "}
-        
-
-
-      />,
-
-
-    },
+//     {
+//       path: "/roles/display/:id",
+//       pageName: "_",
+//       page: <DataDisplay
+//         pageName=""
+//         url={"http://localhost:5000/api/roles/"}
+//         title={"eCommerce Dashboard | create item-variants "}
+//         
+// 
+// 
+//       />,
+// 
+// 
+//     },
     {
       path: "/posters/display/:id",
       pageName: "_",

@@ -84,6 +84,13 @@ function App() {
             </>
           }
         />
+        
+        
+        
+        
+        
+        
+        
 
         <Route
           path="/auth/signin"

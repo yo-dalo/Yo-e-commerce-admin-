@@ -1,6 +1,6 @@
 import InputTextArea from '../components/InputsX/InputTextArea';
 import InputNumber from '../components/InputsX/InputNumber';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, cloneElement} from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -11,7 +11,7 @@ import SelectInput from '../components/InputsX/SelectInput';
 import Input from '../components/InputsX/Input';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 
-const Create = ({ url, inputs, pageName = "Form Layout" }) => {
+const Create = ({ url, inputs, pageName = "Form Layout", children,}) => {
   const [inputData, setInputData] = useState({});
   const [selecterData, setSelecterData] = useState({});
   const [imgFileData, setImgFileData] = useState({});
@@ -58,8 +58,8 @@ const Create = ({ url, inputs, pageName = "Form Layout" }) => {
   
   useEffect(()=>{
    // get(all)
-
- // alert(JSON.stringify(maltiData));
+console.log(maltiData);
+// alert(JSON.stringify(maltiData));
   },[maltiData])
   
   
@@ -235,6 +235,11 @@ const Create = ({ url, inputs, pageName = "Form Layout" }) => {
                         return <div key={index}>Unsupported input type</div>;
                     }
                   })}
+                  {children && React.isValidElement(children)
+                    ? cloneElement(children, {
+                       send: (key,permissions) => handleMulti(key, permissions),
+                      })
+                    : null}
                 </div>
                 <button
                   type="submit"
@@ -253,3 +258,4 @@ const Create = ({ url, inputs, pageName = "Form Layout" }) => {
 };
 
 export default Create;
+

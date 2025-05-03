@@ -37,6 +37,7 @@ const isLogin= async()=>{
 
 
   const login = async (adminData) => {
+    alert("6")
    const res =  await Yo.post("/api/admin-auth/login" ,
    //{phoneOrEmail:"1234567891",password:"10"}
    adminData
