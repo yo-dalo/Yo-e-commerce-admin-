@@ -10,7 +10,7 @@ const PermissionDisplay = [
       pageName: "_",
       page: <DataDisplay
         pageName=""
-        url={"http://localhost:5000/api/permissions/"}
+        url={"/api/permissions/"}
         title={"eCommerce Dashboard | create permissions "}
         
       />,
@@ -27,7 +27,7 @@ const Permission = [
       title:"permissions",
       page: <Page_
         pageName={"permissions"}
-        url={"http://localhost:5000/api/permissions/"}
+        url={"/api/permissions/"}
         title={"eCommerce Dashboard | create permissions "}
         felds={[{ inputTypy: "text" }]}
 
@@ -39,19 +39,19 @@ const Permission = [
     {
       path: "/permissions/create",
       pageName: "Rolls",
-      url: "http://localhost:5000/api/permissions/",
+      url: "/api/permissions/",
       title: "eCommerce Dashboard | create permissions ",
       felds: [{ inputTypy: "text" }],
       page: <Create
         pageName={"permissions"}
         
-        url="http://localhost:5000/api/permissions/"
+        url="/api/permissions/"
         inputs={[
           { type: "text", name: "name" },
           { type: "text", name: "password" },
           { type: "text", name: "email" },
           { type: "number", name: "phone" },
-          { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption", valueBy: "value", optionBy: "status" },
+          { type: "option", name: "status", url: "/api/helper/statusOption", valueBy: "value", optionBy: "status" },
 
         ]}
 
@@ -61,19 +61,19 @@ const Permission = [
 
       path: "/permissions/update/:id",
       pageName: "permissions",
-      url: "http://localhost:5000/api/permissions/",
+      url: "/api/permissions/",
       title: "eCommerce Dashboard | create permissions ",
       felds: [{ inputTypy: "text" }],
       page: <Update
 
         name="permissions"
-        url="http://localhost:5000/api/permissions/"
+        url="/api/permissions/"
         inputs={[
           { type: "text", name: "name" },
           { type: "text", name: "password" },
           { type: "text", name: "email" },
           { type: "number", name: "phone" },
-          { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption", valueBy: "value", optionBy: "status" },
+          { type: "option", name: "status", url: "/api/helper/statusOption", valueBy: "value", optionBy: "status" },
 
         ]}
 

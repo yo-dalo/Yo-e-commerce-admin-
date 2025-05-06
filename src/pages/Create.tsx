@@ -4,7 +4,7 @@ import React, { useState, useEffect, cloneElement} from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import { useNavigate } from 'react-router-dom';
 import MultiInput from '../components/InputsX/MultiInput';
 import FileInput from '../components/InputsX/FileInput';
 import SelectInput from '../components/InputsX/SelectInput';
@@ -12,6 +12,7 @@ import Input from '../components/InputsX/Input';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 
 const Create = ({ url, inputs, pageName = "Form Layout", children,}) => {
+  const go =   useNavigate()
   const [inputData, setInputData] = useState({});
   const [selecterData, setSelecterData] = useState({});
   const [imgFileData, setImgFileData] = useState({});
@@ -58,9 +59,11 @@ const Create = ({ url, inputs, pageName = "Form Layout", children,}) => {
   
   useEffect(()=>{
    // get(all)
-console.log(maltiData);
+//console.log(maltiData);
+
 // alert(JSON.stringify(maltiData));
   },[maltiData])
+  
   
   
 
@@ -112,6 +115,7 @@ console.log(maltiData);
         await axios.post(url, { ...inputData, ...selecterData, ...imgFileData ,...maltiData});
       }
       toast.success("Form submitted successfully! "); 
+      go(-1)
     } catch (error) {
       toast.error("An error occurred: " + error.message); 
     // alert(`Error: ${JSON.stringify(error.response?.data || error.message)}`);

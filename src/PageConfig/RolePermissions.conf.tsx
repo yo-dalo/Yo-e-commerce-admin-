@@ -10,7 +10,7 @@ const RolePermissionDisplay = [
       pageName: "_",
       page: <DataDisplay
         pageName=""
-        url={"http://localhost:5000/api/role-permissions/"}
+        url={"/api/role-permissions/"}
         title={"eCommerce Dashboard | create role-permissions "}
         
       />,
@@ -27,7 +27,7 @@ const RolePermission = [
       title:"role-permissions",
       page: <Page_
         pageName={"role-permissions"}
-        url={"http://localhost:5000/api/role-permissions/"}
+        url={"/api/role-permissions/"}
         title={"eCommerce Dashboard | create role-permissions "}
         felds={[{ inputTypy: "text" }]}
 
@@ -39,13 +39,13 @@ const RolePermission = [
     {
       path: "/role-permissions/create",
       pageName: "Rolls",
-      url: "http://localhost:5000/api/role-permissions/",
+      url: "/api/role-permissions/",
       title: "eCommerce Dashboard | create role-permissions ",
       felds: [{ inputTypy: "text" }],
       page: <Create
         pageName={"role-permissions"}
         
-        url="http://localhost:5000/api/role-permissions/"
+        url="/api/role-permissions/"
         inputs={[
           { type: "number", name: "role_id" },
           { type: "number", name: "permission_id" },
@@ -59,13 +59,13 @@ const RolePermission = [
 
       path: "/role-permissions/update/:id",
       pageName: "role-permissions",
-      url: "http://localhost:5000/api/role-permissions/",
+      url: "/api/role-permissions/",
       title: "eCommerce Dashboard | create role-permissions ",
       felds: [{ inputTypy: "text" }],
       page: <Update
 
         name="role-permissions"
-        url="http://localhost:5000/api/role-permissions/"
+        url="/api/role-permissions/"
         inputs={[
           { type: "number", name: "role_id" },
           { type: "number", name: "permission_id" },

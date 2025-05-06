@@ -72,6 +72,7 @@ const TableThreeX = ({url}) => {
     
   useEffect(() => {
   const source = Axios.CancelToken.source();
+  
   setLoading(true);
   Axios.get(url+"?page="+pageNumber, { cancelToken: source.token })
     .then((res) => {
@@ -118,6 +119,11 @@ const TableThreeX = ({url}) => {
   //setDataX(data);
 
   }, [])
+  useEffect(() => {
+  setDataX([])
+
+
+  }, [url,pageNumber])
   
 
   return (
@@ -136,7 +142,7 @@ const TableThreeX = ({url}) => {
             </tr>
           </thead>
           <tbody>
-            {dataX?.map((packageItem, key) => (
+            {dataX.length>0?dataX?.map((packageItem, key) => (
                 <tr key={key}>
                  <TableTd text_1={(Number(pageNumber) - 1) * 10 + (key + 1)} />
                   {keyArryX?.map((element, index) => (
@@ -150,7 +156,8 @@ const TableThreeX = ({url}) => {
                     update_url={`update/${packageItem["id"]}`} 
                     />
                 </tr>
-              ))}
+              )):"data not found"}
+              
           </tbody>
         </table>
       </div>

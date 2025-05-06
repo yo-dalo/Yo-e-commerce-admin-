@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
 import UserOne from '../../images/user/user-01.png';
+import { useAuth } from "../../context/AuthContext";
 
 const DropdownUser = () => {
+  const { admin } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
@@ -20,8 +22,8 @@ const DropdownUser = () => {
           <span className="block text-xs">UX Designer</span>
         </span>
 
-        <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+        <span className="h-12 w-12 overflow-hidden rounded-full">
+         { admin?.img && <img  src={"/uploads/"+admin?.img} alt="admin img" />}
         </span>
 
         <svg

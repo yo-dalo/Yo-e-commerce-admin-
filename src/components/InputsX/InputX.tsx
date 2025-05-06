@@ -7,7 +7,7 @@ import FileInput from './FileInput';
 import Input from './Input';
 
 
-const InputX = ({inputs,name,get}) => {
+const InputX = ({inputs,name,get,value={}}) => {
   const [inputData, setInputData] = useState({});
   const [selecterData, setSelecterData] = useState({});
   const [imgFileData, setImgFileData] = useState({});
@@ -35,7 +35,17 @@ const InputX = ({inputs,name,get}) => {
   
   useEffect(()=>{
     get(all)
+    console.log(all);
   },[all])
+  useEffect(()=>{
+    
+   // setAll({...value[0]})
+    setInputData({...value[0]})
+    setSelecterData({...value[0]})
+    setImgFileData({...value[0]})
+    
+    
+  },[value])
   
   
   return (

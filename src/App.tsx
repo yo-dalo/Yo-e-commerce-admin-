@@ -16,6 +16,7 @@ import ECommerce from './pages/Dashboard/ECommerce';
 import Settings from './pages/Settings';
 
 import DefaultLayout from './layout/DefaultLayout';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 
 
@@ -37,14 +38,17 @@ function App() {
   ) : (
     <>
     <Msg />
+
     <DefaultLayout>
       <Routes>
         <Route
           index
           element={
             <>
+                <ProtectedRoute>
               <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <ECommerce />
+                  </ProtectedRoute>
             </>
           }
         />
@@ -58,8 +62,10 @@ function App() {
           path={element_?.path}
           element={
             <>
+              <ProtectedRoute>
               <PageTitle title={element_?.title||""} />
               {element_?.page }
+              </ProtectedRoute>
             </>
           }
         />
@@ -79,8 +85,10 @@ function App() {
           path="/settings"
           element={
             <>
+                    <ProtectedRoute>
               <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <Settings />
+                  </ProtectedRoute>
             </>
           }
         />
@@ -115,6 +123,7 @@ function App() {
     
       </Routes>
     </DefaultLayout>
+
     
 
     </>

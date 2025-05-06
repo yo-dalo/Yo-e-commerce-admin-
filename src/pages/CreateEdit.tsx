@@ -3,13 +3,14 @@ import SelectInput from '../../components/Edit/SelectInput';
 import Input from '../../components/Edit/Input';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import React,{useState,useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 import { Link ,useParams} from 'react-router-dom';
 
 
 const CreateEdit = ({type,pageName,name,ignore,selecter,file,addUrl,editUrl,url}) => {
   const { id } = useParams();
-  
+  const go =   useNavigate()
   
   
   const [inputData, setInputData] = useState({})

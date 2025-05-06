@@ -10,7 +10,7 @@ const UserDisplay = [
       pageName: "_",
       page: <DataDisplay
         pageName=""
-        url={"http://localhost:5000/api/users/"}
+        url={"/api/users/"}
         title={"eCommerce Dashboard | create users "}
         
       />,
@@ -27,7 +27,7 @@ const User = [
       title:"users",
       page: <Page_
         pageName={"users"}
-        url={"http://localhost:5000/api/users/"}
+        url={"/api/users/"}
         title={"eCommerce Dashboard | create users "}
         felds={[{ inputTypy: "text" }]}
 
@@ -39,19 +39,19 @@ const User = [
     {
       path: "/users/create",
       pageName: "Rolls",
-      url: "http://localhost:5000/api/users/",
+      url: "/api/users/",
       title: "eCommerce Dashboard | create users ",
       felds: [{ inputTypy: "text" }],
       page: <Create
         pageName={"users"}
         
-        url="http://localhost:5000/api/users/"
+        url="/api/users/"
         inputs={[
           { type: "text", name: "name" },
           { type: "text", name: "password" },
           { type: "text", name: "email" },
           { type: "number", name: "phone" },
-          { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption", valueBy: "value", optionBy: "status" },
+          { type: "option", name: "status", url: "/api/helper/statusOption", valueBy: "value", optionBy: "status" },
 
         ]}
 
@@ -61,19 +61,19 @@ const User = [
 
       path: "/users/update/:id",
       pageName: "users",
-      url: "http://localhost:5000/api/users/",
+      url: "/api/users/",
       title: "eCommerce Dashboard | create users ",
       felds: [{ inputTypy: "text" }],
       page: <Update
 
         name="users"
-        url="http://localhost:5000/api/users/"
+        url="/api/users/"
         inputs={[
           { type: "text", name: "name" },
           { type: "text", name: "password" },
           { type: "text", name: "email" },
           { type: "number", name: "phone" },
-          { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption", valueBy: "value", optionBy: "status" },
+          { type: "option", name: "status", url: "/api/helper/statusOption", valueBy: "value", optionBy: "status" },
 
         ]}
 

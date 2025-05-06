@@ -4,6 +4,7 @@ import InputTextArea from '../components/InputsX/InputTextArea';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import FileInput from '../components/InputsX/FileInput';
 import SelectInput from '../components/InputsX/SelectInput';
@@ -12,6 +13,7 @@ import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 
 const Update = ({ url, inputs, pageName = "Form Layout" }) => {
   const { id } = useParams();
+  const go =   useNavigate()
   const [inputData, setInputData] = useState({});
   const [selecterData, setSelecterData] = useState({});
   const [imgFileData, setImgFileData] = useState({});
@@ -27,6 +29,7 @@ const Update = ({ url, inputs, pageName = "Form Layout" }) => {
      // alert(JSON.stringify(res.data.data))
       setAllData(res.data.data)
       setInputData(res.data.data)
+      
        // console.log("Fetched Data:", res.data.data);
       })
       .catch((err) => {
@@ -74,7 +77,7 @@ const handleMulti = (key, value) => {
         //alert(JSON.stringify( {...allData, ...inputData, ...selecterData, ...imgFileData }));
         await axios.put(url+id, {...allData, ...inputData, ...selecterData, ...imgFileData });
       }
-
+    go(-1)
       toast.success("Form submitted successfully! "); 
     } catch (error) {
             toast.error("An error occurred: " + error.message); 
@@ -186,6 +189,7 @@ const handleMulti = (key, value) => {
                         return (
                            <MultiInput 
                              key={index}
+                             value={allData?.variants}
                              inputs={element.inputs}
                              get={(data)=>handleMulti(element.name,data)}
                              

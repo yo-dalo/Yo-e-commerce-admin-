@@ -11,7 +11,7 @@ const AdminDisplay = [
       pageName: "_",
       page: <DataDisplay
         pageName=""
-        url={"http://localhost:5000/api/admins/"}
+        url={"/api/admins/"}
         title={"eCommerce Dashboard | create admins "}
         
       />,
@@ -28,7 +28,7 @@ const Admin = [
       title:"admins",
       page: <Page_
         pageName={"admins"}
-        url={"http://localhost:5000/api/admins/"}
+        url={"/api/admins/"}
         title={"eCommerce Dashboard | create admins "}
         felds={[{ inputTypy: "text" }]}
 
@@ -40,7 +40,7 @@ const Admin = [
     {
       path: "/admins/create",
       pageName: "Rolls",
-      url: "http://localhost:5000/api/admins/",
+      url: "/api/admins/",
       title: "eCommerce Dashboard | create admins ",
       felds: [{ inputTypy: "text" }],
       page: <Create
@@ -49,8 +49,8 @@ const Admin = [
       /// children={<SelectRoleParmitions onPermissionChange={(permissions) => handleMulti("permissions", permissions)} />}
       
         pageName={"admins"}
-       // url="http://localhost:5000/api/admins/"
-       url="http://localhost:5000/api/admin-auth/register/"
+       // url="/api/admins/"
+       url="/api/admin-auth/register/"
         inputs={[
           { type: "text", name: "name" },
           { type: "text", name: "password" },
@@ -58,7 +58,7 @@ const Admin = [
           { type: "number", name: "phone" },
           { type: "number", name: "role_id" },
           { type: "file", name: "img", multiple: false },
-          { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption", valueBy: "value", optionBy: "status" },
+          { type: "option", name: "status", url: "/api/helper/statusOption", valueBy: "value", optionBy: "status" },
 
         ]}
 
@@ -68,7 +68,7 @@ const Admin = [
     {
       path: "/admins/login",
       pageName: "Rolls",
-      url: "http://localhost:5000/api/admins/",
+      url: "/api/admins/",
       title: "eCommerce Dashboard | create admins ",
       felds: [{ inputTypy: "text" }],
       page: <Create
@@ -77,8 +77,8 @@ const Admin = [
       /// children={<SelectRoleParmitions onPermissionChange={(permissions) => handleMulti("permissions", permissions)} />}
       
         pageName={"admins"}
-        url="http://localhost:5000/api/admin-auth/login/"
-      // url="http://localhost:5000/api/admin-auth/register/"
+        url="/api/admin-auth/login/"
+      // url="/api/admin-auth/register/"
         inputs={[
           { type: "text", name: "phoneOrEmail" },
           { type: "number", name: "password" },
@@ -94,13 +94,13 @@ const Admin = [
 
       path: "/admins/update/:id",
       pageName: "admins",
-      url: "http://localhost:5000/api/admins/",
+      url: "/api/admins/",
       title: "eCommerce Dashboard | create admins ",
       felds: [{ inputTypy: "text" }],
       page: <Update
 
         name="admins"
-        url="http://localhost:5000/api/admins/"
+        url="/api/admins/"
                 inputs={[
           { type: "text", name: "name" },
           { type: "text", name: "password" },
@@ -108,7 +108,7 @@ const Admin = [
           { type: "number", name: "phone" },
           { type: "number", name: "role_id" },
           { type: "file", name: "img", multiple: false },
-          { type: "option", name: "status", url: "http://localhost:5000/api/helper/statusOption", valueBy: "value", optionBy: "status" },
+          { type: "option", name: "status", url: "/api/helper/statusOption", valueBy: "value", optionBy: "status" },
 
         ]}
 

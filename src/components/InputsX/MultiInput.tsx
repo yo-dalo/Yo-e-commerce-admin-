@@ -4,7 +4,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleRemove } from "react-icons/ci";
 
 
-const MultiInput = ({inputs,name,get}) => {
+const MultiInput = ({inputs,name,get,value}) => {
     const [loop, setLoop] = useState([1]);
     const [all, setAll] = useState([]);
     
@@ -34,6 +34,7 @@ const addOrReplaceItem = (index, newItem) => {
     }
 
   useEffect(()=>{
+  
     get(all)
   //  get(all)
     //console.log(all);
@@ -50,6 +51,7 @@ const addOrReplaceItem = (index, newItem) => {
    <InputX
      name={index}
     inputs={inputs}
+    value={value}
     get={(data)=>add(index,data)}
     />
     
