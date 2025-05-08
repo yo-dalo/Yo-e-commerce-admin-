@@ -9,6 +9,8 @@ import {Permission} from './PageConfig/Permissions.conf';
 import {RolePermission} from './PageConfig/RolePermissions.conf';
 import {Role} from './PageConfig/Role.conf';
 import {Item} from './PageConfig/Item.conf';
+import {OrderItems} from './PageConfig/orderItems.conf';
+import {Coupon} from './PageConfig/Coupon.conf';
 
 
 
@@ -20,6 +22,8 @@ const Page = [
  ...RolePermission,
 ...Role,
 ...Item,
+...OrderItems,
+//...Coupon,
  
   ///roles
   
