@@ -99,7 +99,7 @@ try {
           <div key={i}>
             {typeof item.img === 'string' && isImage(item.img) ? (
               <div  ref={e=> imgRef.current[i] = e } className="flex flex-col gap-1.5 justify-between items-center">
-              <img className="max-w-xl max-h-60" src={`http://localhost:5000/uploads/${item.img}`} alt="preview" />
+              <img className="max-w-xl max-h-60" src={`/uploads/${item.img}`} alt="preview" />
                  <div onClick={()=>deleteImg(item.id,i)} className="bg-red-800 px-2 py-1">Delect{i} </div>
                  </div>
             ) : (
@@ -111,7 +111,7 @@ try {
     ) : (
       <td className="py-3 px-6">
         {typeof dataX[data] === 'string' && isImage(dataX[data]) ? (
-          <img className="max-w-xl max-h-60" src={`http://localhost:5000/uploads/${dataX[data]}`} alt="preview" />
+          <img className="max-w-xl max-h-60" src={`/uploads/${dataX[data]}`} alt="preview" />
         ) : (
           dataX[data] || "--"
         )}

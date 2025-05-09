@@ -19,8 +19,8 @@ const Create = ({ url, inputs, pageName = "Form Layout", children,}) => {
   const [loading, setLoading] = useState(false);
   const [callCreateV2, setCallCreateV2] = useState(false);
   const [maltiData, setMultiData] = useState([]);
-  
   const [selecterLink,setSelecterLink ] = useState({});
+  const [newError,setNewError ] = useState({});
   
 /*
   useEffect(() => {
@@ -61,8 +61,9 @@ const Create = ({ url, inputs, pageName = "Form Layout", children,}) => {
    // get(all)
 //console.log(maltiData);
 
-// alert(JSON.stringify(maltiData));
-  },[maltiData])
+
+//alert(JSON.stringify(inputData));
+  },[maltiData,inputData,selecterData,imgFileData])
   
   
   

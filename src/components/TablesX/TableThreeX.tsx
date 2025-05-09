@@ -147,7 +147,7 @@ const TableThreeX = ({url}) => {
                  <TableTd text_1={(Number(pageNumber) - 1) * 10 + (key + 1)} />
                   {keyArryX?.map((element, index) => (
                     typeof packageItem[element] === 'string' && isImage(packageItem[element])
-                      ? <TdImg key={index} src={`http://localhost:5000/uploads/` + packageItem[element]  || "......loding" }  />
+                      ? <TdImg key={index} src={`/uploads/` + packageItem[element]  || "......loding" }  />
                       : <TableTd key={index} text_1={packageItem[element] || '-'} />
                   ))}
                   <TebletAction 
