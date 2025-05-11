@@ -56,6 +56,7 @@ const Role = [
         url="/api/roles/"
         inputs={[
           { type: "text", name: "role_name" },
+          { type: "number", name: "created_by" },
           { type: "option", name: "status", url: "/api/helper/statusOption", valueBy: "value", optionBy: "status" },
         ]}
 

@@ -53,6 +53,7 @@ const Admin = [
        url="/api/admin-auth/register/"
         inputs={[
           { type: "text", name: "name" },
+          { type: "number", name: "created_by" },
           { type: "text", name: "password" },
           { type: "text", name: "email" },
           { type: "number", name: "phone" },

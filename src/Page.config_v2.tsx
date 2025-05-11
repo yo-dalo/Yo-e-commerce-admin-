@@ -515,6 +515,7 @@ const Page = [
             { type: "number", name: "min_order_amount" },
             { type: "text", name: "valid_from" },
             { type: "text", name: "valid_to" },
+           { type: "number", name: "created_by" },
             { type: "option", name: "status", url: "/api/helper/statusOption", valueBy: "value", optionBy: "status" },
           ]
 
@@ -624,6 +625,20 @@ const Page = [
         pageName="dataDisplay"
         url={"/api/categories/"}
         title={"eCommerce Dashboard | create item-variants "}
+        
+
+
+      />,
+
+
+    },
+    {
+      path: "/sub-categories/display/:id",
+      pageName: "sub-categories",
+      page: <DataDisplay
+        pageName="sub-categories"
+        url={"/api/sub-categories/"}
+        title={"eCommerce Dashboard | create sub-categories "}
         
 
 

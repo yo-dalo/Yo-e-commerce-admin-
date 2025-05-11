@@ -3,88 +3,151 @@ import InputNumber from '../components/InputsX/InputNumber';
 import InputTextArea from '../components/InputsX/InputTextArea';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import FileInput from '../components/InputsX/FileInput';
 import SelectInput from '../components/InputsX/SelectInput';
 import Input from '../components/InputsX/Input';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
+import PropTypes from 'prop-types';
+import Yo from '../common/Helper/Yo';
 
 const Update = ({ url, inputs, pageName = "Form Layout" }) => {
   const { id } = useParams();
-  const go =   useNavigate()
-  const [inputData, setInputData] = useState({});
-  const [selecterData, setSelecterData] = useState({});
-  const [imgFileData, setImgFileData] = useState({});
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [callCreateV2, setCallCreateV2] = useState(false);
-  const [allData, setAllData] = useState({});
-  const [maltiData, setMultiData] = useState([]);
+  const [hasFiles, setHasFiles] = useState(false);
 
-
+  // Fetch initial data
   useEffect(() => {
-    axios.get(`${url}`+id)
-      .then((res) => {
-     // alert(JSON.stringify(res.data.data))
-      setAllData(res.data.data)
-      setInputData(res.data.data)
-      
-       // console.log("Fetched Data:", res.data.data);
-      })
-      .catch((err) => {
-        alert("Error fetching data");
-      });
-  }, [url]);
+    const fetchData = async () => {
+      try {
+        const response = await Yo.get(`${url}${id}`);
+     setFormData(response?.data);
+     
+      } catch (error) {
+        toast.error("Failed to load data");
+        console.error("Fetch error:", error);
+      }
+    };
+    
+    fetchData();
+  }, [url, id]);
 
-  const handleInputChange = (key, value) => {
-    setInputData(prev => ({ ...prev, [key]: value }));
+  // Handle all form changes
+  const handleChange = (key, value) => {
+    setFormData(prev => ({ ...prev, [key]: value }));
   };
 
-  const handleSelectChange = (key, value) => {
-    setSelecterData(prev => ({ ...prev, [key]: value }));
-  };
-
+  // Handle file changes
   const handleFileChange = (key, value) => {
-    setImgFileData(prev => ({ ...prev, [key]: value }));
-    setCallCreateV2(true);
+    setHasFiles(true);
+    handleChange(key, value);
   };
 
-
-const handleMulti = (key, value) => {
-        setMultiData(prev => ({ ...prev, [key]: value }));
-
+  // Handle multi-input changes
+  const handleMulti = (key, value) => {
+    handleChange(key, value);
   };
 
+  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      if (callCreateV2) {
-        const formData = new FormData();
-       const  sendX= { ...allData,...inputData, ...selecterData, ...imgFileData }
-        Object.keys(sendX).forEach((key, value) => {
-        formData.append(key, sendX[key]);
+      if (hasFiles) {
+        const formDataObj = new FormData();
+        
+        // Append all data to FormData
+        Object.entries(formData).forEach(([key, value]) => {
+          if (value instanceof File || Array.isArray(value)) {
+            // Handle single file or array of files
+            const files = Array.isArray(value) ? value : [value];
+            files.forEach(file => formDataObj.append(key, file));
+          } else if (typeof value === 'object') {
+            formDataObj.append(key, JSON.stringify(value));
+          } else {
+            formDataObj.append(key, String(value));
+          }
         });
 
-        await axios.put(url+id, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+        await axios.put(`${url}${id}`, formDataObj, {
+          headers: { 'Content-Type': 'multipart/form-data' }
         });
       } else {
-        //alert(JSON.stringify( {...allData, ...inputData, ...selecterData, ...imgFileData }));
-        await axios.put(url+id, {...allData, ...inputData, ...selecterData, ...imgFileData });
+        await axios.put(`${url}${id}`, formData);
       }
-    go(-1)
-      toast.success("Form submitted successfully! "); 
+      
+      toast.success(`${pageName} updated successfully!`);
+      navigate(-1);
     } catch (error) {
-            toast.error("An error occurred: " + error.message); 
-
-     // alert(`Error: ${JSON.stringify(error.response?.data || error.message)}`);
+      const errorMessage = error.response?.data?.message || error.message;
+      toast.error(`Error: ${errorMessage}`);
+      console.error("Submission error:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const renderInput = (element, index) => {
+    const commonProps = {
+      key: index,
+      label: element.name,
+      name: element.name,
+      value: formData[element.name] || '',
+      onChange: (e) => handleChange(element.name, e.target.value),
+      disabled: loading,
+    };
+
+    switch (element.type) {
+      case 'text':
+        return <Input {...commonProps} placeholder="Enter value" />;
+      case 'number':
+        return <InputNumber {...commonProps} placeholder="Enter value" />;
+      case 'text-area':
+        return <InputTextArea {...commonProps} placeholder="Enter value" />;
+      case 'option':
+        return (
+          <SelectInput
+            {...commonProps}
+            
+            setSelecter={handleChange}
+            optionValue={element.valueBy}
+            optionShowBy={element.optionBy}
+            url={element.url}
+            selectedValue={formData[element.name] || ''}
+            toLink={{ [element.toLink]: formData[element.toLink] } || {}}
+            error={[{ index: 0, newError: { error: true, message: "placeholder" } }]}
+          />
+        );
+      case 'file':
+        return (
+          <FileInput
+            {...commonProps}
+            onChange={(e) => {
+              if (e.target.files.length > 0) {
+                handleFileChange(
+                  element.name,
+                  element.multiple ? Array.from(e.target.files) : e.target.files[0]
+                );
+              }
+            }}
+            multiple={element.multiple || false}
+          />
+        );
+      case 'multiInputs':
+        return (
+          <MultiInput
+            key={index}
+            value={formData?.variants}
+            inputs={element.inputs}
+            get={(data) => handleMulti(element.name, data)}
+          />
+        );
+      default:
+        return <div key={index}>Unsupported input type</div>;
     }
   };
 
@@ -101,108 +164,13 @@ const handleMulti = (key, value) => {
               </h3>
             </div>
             <form onSubmit={handleSubmit}>
-               <div className="p-6.5">
+              <div className="p-6.5">
                 <div className="mb-4.5 flex flex-col gap-6 md:flex-row md:flex-wrap xl:flex-row">
-                  {inputs?.map((element, index) => {
-                    switch (element.type) {
-                      case 'text':
-                        return (
-                          <Input
-                            key={index}
-                            label={element.name}
-                            placeholder="Enter value"
-                            value={inputData[element.name] || ''}
-                            onChange={(e) => handleInputChange(element.name, e.target.value)}
-                            disabled={false}
-                          />
-                        );
-                      case 'number':
-                        return (
-                          <InputNumber 
-                            key={index}
-                            label={element.name}
-                            placeholder="Enter value"
-                            value={inputData[element.name] || ''}
-                            onChange={(e) => handleInputChange(element.name, e.target.value)}
-                            disabled={false}
-                          />
-                        );
-                      case 'text-area':
-                        return (
-                          <InputTextArea
-                            key={index}
-                            label={element.name}
-                            placeholder="Enter value"
-                            value={inputData[element.name] || ''}
-                            onChange={(e) => handleInputChange(element.name, e.target.value)}
-                            disabled={false}
-                          />
-                        );
-                      case 'option':
-                        return (
-                          <SelectInput
-                            key={index}
-                            setSelecter={handleSelectChange}
-                            optionValue={element.valueBy}
-                            name={element.name}
-                            optionShowBy={element.optionBy}
-                            url={element.url}
-                            selectedValue={allData[element?.name]}
-                            toLink={{[element.toLink]:selecterData[element.toLink]}||{}}
-                            error=
-                            {
-                              [
-                                {
-                                  index:0,
-                                newError:
-                                {
-                                  error:true,
-                                  message:"placeholder"
-                                  
-                                },
-                                
-                                }
-                              ]
-                                }
-  
-                            
-                          />
-                        );
-                      case 'file':
-                        return (
-                        <FileInput
-                            key={index} // Ensure unique key
-                            onChange={(e) => {
-                              if (e.target.files.length > 0) {
-                                handleFileChange(
-                                  element.name,
-                                  element.multiple ? Array.from(e.target.files) : e.target.files[0]
-                                );
-                              }
-                            }}
-                            label={element.name}
-                            multiple={element.multiple || false} // Ensure proper boolean value
-                           />
-
-                        );
-                      case 'multiInputs':
-                        return (
-                           <MultiInput 
-                             key={index}
-                             value={allData?.variants}
-                             inputs={element.inputs}
-                             get={(data)=>handleMulti(element.name,data)}
-                             
-                           />
-                        );
-                      default:
-                        return <div key={index}>Unsupported input type</div>;
-                    }
-                  })}
+                  {inputs?.map(renderInput)}
                 </div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
+                  className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90 disabled:opacity-50"
                   disabled={loading}
                 >
                   {loading ? "Submitting..." : `Update ${pageName}`}
@@ -214,6 +182,18 @@ const handleMulti = (key, value) => {
       </div>
     </>
   );
+};
+
+Update.propTypes = {
+  url: PropTypes.string.isRequired,
+  inputs: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.oneOf(['text', 'number', 'text-area', 'option', 'file', 'multiInputs']).isRequired,
+      name: PropTypes.string.isRequired,
+      // Add other prop-specific validations as needed
+    })
+  ).isRequired,
+  pageName: PropTypes.string,
 };
 
 export default Update;
