@@ -20,6 +20,7 @@ const Create = ({ url, inputs, pageName = "Form Layout", children }) => {
   const handleChange = (key, value) => {
     setFormData(prev => ({ ...prev, [key]: value }));
     
+    
   };
 
   const handleSubmit = async (e) => {
@@ -28,27 +29,33 @@ const Create = ({ url, inputs, pageName = "Form Layout", children }) => {
 
     try {
       if (hasFiles) {
-        const formData = new FormData();
+        const formDataX = new FormData();
+        
         
         // Append all data to FormData
-        Object.entries(formData).forEach(([key, value]) => {
+        Object.entries(formData).forEach(([key, value],i) => {
           if (Array.isArray(value)) {
-            value.forEach(file => formData.append(key, file));
+            value.forEach(file => formDataX.append(key, file));
+            console.log(value);
           } else if (value instanceof File) {
-            formData.append(key, value);
+            formDataX.append(key, value);
           } else if (typeof value === 'object') {
             formData.append(key, JSON.stringify(value));
           } else {
-            formData.append(key, value);
+            formDataX.append(key, String(value));
           }
         });
-
+        
+        
+        
+        
         await axios.post(url, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
       } else {
+        
         await axios.post(url, formData);
       }
       
