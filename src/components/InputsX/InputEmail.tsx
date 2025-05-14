@@ -20,7 +20,7 @@ const InputEmail = ({label,placeholder,disabled,value,onChange,ignore=[],classNa
   return (
     <>
    {complement?.map((ignoreEle,i)=>(
-                  <div className={`w-full xl:w-1/2 md:w-[45%] ${className}`}>
+                  <div key={i} className={`w-full xl:w-1/2 md:w-[45%] ${className}`}>
                     <label className="mb-2.5 block text-black dark:text-white">
                       {label?.split("_")?.join(" ")} <span className="text-meta-1">{disabled?"Not For Edit":""}</span> 
                     </label>

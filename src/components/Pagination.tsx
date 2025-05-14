@@ -7,7 +7,7 @@ const Pagination = () => {
       
       {[1,0,4].map((element,index)=>(
         
-<Link to={`?page=${index+1}`} className="w-14 rounded-sm text-center py-5 px-5 h-full shadow-default dark:border-strokedark dark:bg-meta-4 ">
+<Link key={index} to={`?page=${index+1}`} className="w-14 rounded-sm text-center py-5 px-5 h-full shadow-default dark:border-strokedark dark:bg-meta-4 ">
 {index+1}
 </Link>
         

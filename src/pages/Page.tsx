@@ -9,8 +9,7 @@ const Page = ({url,pageName}) => {
   
   return (
     <>
-     <Link to="create"><Breadcrumb pageName={pageName}   /></Link>
-
+    <Link to="create"><Breadcrumb pageName={pageName}   /></Link>
 
 
       <div className="flex flex-col gap-10">

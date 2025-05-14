@@ -19,8 +19,6 @@ const Create = ({ url, inputs, pageName = "Form Layout", children }) => {
 
   const handleChange = (key, value) => {
     setFormData(prev => ({ ...prev, [key]: value }));
-    
-    
   };
 
   const handleSubmit = async (e) => {
@@ -28,36 +26,33 @@ const Create = ({ url, inputs, pageName = "Form Layout", children }) => {
     setLoading(true);
 
     try {
-      if (hasFiles) {
-        const formDataX = new FormData();
-        
-        
-        // Append all data to FormData
-        Object.entries(formData).forEach(([key, value],i) => {
-          if (Array.isArray(value)) {
-            value.forEach(file => formDataX.append(key, file));
-            console.log(value);
-          } else if (value instanceof File) {
-            formDataX.append(key, value);
-          } else if (typeof value === 'object') {
-            formData.append(key, JSON.stringify(value));
-          } else {
-            formDataX.append(key, String(value));
-          }
-        });
-        
-        
-        
-        
-        await axios.post(url, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+if (hasFiles) {
+  const formDataX = new FormData();
+
+  Object.entries(formData).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      const allFiles = value.every(file => file instanceof File);
+      if (allFiles) {
+        value.forEach(file => {
+          formDataX.append(key, file);
         });
       } else {
-        
-        await axios.post(url, formData);
+        formDataX.append(key, JSON.stringify(value));
       }
+    } else {
+      formDataX.append(key, value instanceof File ? value : String(value));
+    }
+  });
+
+  await axios.post(url, formDataX, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+} else {
+  await axios.post(url, formData);
+}
+
       
       toast.success(`${pageName} created successfully!`);
       navigate(-1);
@@ -120,7 +115,7 @@ const Create = ({ url, inputs, pageName = "Form Layout", children }) => {
         return (
           <MultiInput
             key={index}
-            inputs={element.inputs}
+           inputs={element.inputs}
             get={(data) => handleChange(element.name, data)}
           />
         );

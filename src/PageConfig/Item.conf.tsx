@@ -82,7 +82,7 @@ const Item = [
       page: <Update
 
         name="Rolls"
-        url="/api/items/"
+        url="/api/items/update/"
         inputs={
           [
             { type: "text", name: "name" },

@@ -191,17 +191,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </NavLink>
                           </li>
                           
-                          {Page.map((element,index)=>(
+                          {Page?.map((element,index)=>(
 
-                               <li key={index}>
+                               <li key={index+"66a"}>
                             <NavLink
-                              to={element[0].path}
+                              to={element[0]?.path}
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
                               }
                             >
-                              {element[0].pageName}
+                              {element[0]?.pageName}
                             </NavLink>
                           </li>
                               

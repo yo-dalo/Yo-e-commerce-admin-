@@ -7,7 +7,7 @@ class Yo {
       return response.data;
     } catch (error) {
       console.error("GET error:", error);
-      throw error;
+      return error;
     }
   }
 
@@ -17,7 +17,7 @@ class Yo {
       return response.data;
     } catch (error) {
       console.error("POST error:", error);
-      throw error;
+      return error;
     }
   }
 
@@ -27,7 +27,7 @@ class Yo {
       return response.data;
     } catch (error) {
       console.error("PUT error:", error);
-      throw error;
+      return error;
     }
   }
 
@@ -37,7 +37,7 @@ class Yo {
       return response.data;
     } catch (error) {
       console.error("PATCH error:", error);
-      throw error;
+      return error;
     }
   }
 
@@ -47,7 +47,7 @@ class Yo {
       return response.data;
     } catch (error) {
       console.error("DELETE error:", error);
-      throw error;
+      return error;
     }
   }
 }

@@ -192,7 +192,7 @@ const handleFormData = (key,value)=>{
                   <div className="relative">
                     <input
                      onChange={(e)=>handleFormData("phoneOrEmail",e.target.value)}
-                      value={formData.email}
+                      value={formData.email || ''}
                       name="phoneOrEmail"
                       type="text"
                       placeholder="Enter your email"
@@ -226,7 +226,7 @@ const handleFormData = (key,value)=>{
                   <div className="relative">
                     <input
                      onChange={(e)=>handleFormData("password",e.target.value)}
-                      value={formData.password}
+                      value={formData.password || ''}
                       type="password"
                       placeholder="6+ Characters, 1 Capital letter"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"

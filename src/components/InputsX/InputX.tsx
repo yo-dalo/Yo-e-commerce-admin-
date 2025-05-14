@@ -5,36 +5,53 @@ import axios from 'axios';
 import SelectInput from './SelectInput';
 import FileInput from './FileInput';
 import Input from './Input';
-import PropTypes from 'prop-types';
 
-const InputX = ({ inputs, name, get, value = {} }) => {
-  const [allData, setAllData] = useState({});
+interface InputElement {
+  type: 'text' | 'number' | 'text-area' | 'option' | 'file' | 'multiInputs';
+  name: string;
+  valueBy?: string;
+  optionBy?: string;
+  url?: string;
+  toLink?: string;
+  multiple?: boolean;
+  inputs?: InputElement[];
+}
+
+interface InputXProps {
+  inputs: InputElement[];
+  name?: string;
+  get: (data: any) => void;
+  value?: Record<string, any>;
+}
+
+const InputX = ({ inputs, name, get, value = {} }: InputXProps) => {
+  const [allData, setAllData] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(false);
 
-  // Handle all input changes uniformly
-  const handleChange = (key, value) => {
+  const handleChange = (key: string, value: any) => {
     setAllData(prev => ({ ...prev, [key]: value }));
   };
 
-  // Initialize with default values
   useEffect(() => {
     if (value && Object.keys(value).length > 0) {
       setAllData(prev => ({ ...prev, ...value }));
     }
   }, [value]);
 
-  // Notify parent of changes
   useEffect(() => {
     get(allData);
-  }, [allData, get]);
+  }, [allData]);
 
-  const renderInput = (element, index) => {
+  const renderInput = (element: InputElement, index: number) => {
+    // Create a unique key based on element name and index
+    const uniqueKey = `${element.name}-${index}`;
+    
     const commonProps = {
-      key: index,
+      key: uniqueKey, // Make sure key is passed properly
       label: element.name,
       value: allData[element.name] || '',
       disabled: false,
-      onChange: (e) => handleChange(element.name, e.target.value)
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleChange(element.name, e.target.value)
     };
 
     switch (element.type) {
@@ -47,23 +64,26 @@ const InputX = ({ inputs, name, get, value = {} }) => {
       case 'option':
         return (
           <SelectInput
-            {...commonProps}
+            key={uniqueKey}
             setSelecter={handleChange}
-            optionValue={element.valueBy}
+            optionValue={element.valueBy || 'value'}
             name={element.name}
-            optionShowBy={element.optionBy}
-            url={element.url}
+            optionShowBy={element.optionBy || 'label'}
+            url={element.url || ''}
             selectedValue={allData[element.name] || ''}
-            toLink={{ [element.toLink]: allData[element.toLink] } || {}}
-            error={[{ index: 0, newError: { error: true, message: "placeholder" } }]}
+            toLink={{ [element.toLink || '']: allData[element.toLink || ''] } || {}}
+            error={[]}
           />
         );
       case 'file':
         return (
           <FileInput
-            {...commonProps}
-            onChange={(e) => {
-              if (e.target.files.length > 0) {
+            key={uniqueKey}
+            label={element.name}
+            value={allData[element.name] || ''}
+            disabled={false}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              if (e.target.files && e.target.files.length > 0) {
                 handleChange(
                   element.name,
                   element.multiple ? Array.from(e.target.files) : e.target.files[0]
@@ -76,39 +96,26 @@ const InputX = ({ inputs, name, get, value = {} }) => {
       case 'multiInputs':
         return (
           <MultiInput
-            key={index}
-            inputs={element.inputs}
+            key={uniqueKey}
+            inputs={element.inputs || []}
             get={(data) => handleChange(element.name, data)}
           />
         );
       default:
-        return <div key={index}>Unsupported input type</div>;
+        return <div key={uniqueKey}>Unsupported input type</div>;
     }
   };
 
   return (
     <div className="rounded-sm min-w-full border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="p-3">{name + 1}</div>
+      {name && <div className="p-3">{name}</div>}
       <div className="p-6.5">
         <div className="mb-4.5 flex flex-col gap-6 md:flex-row md:flex-wrap2 xl:flex-row">
-          {inputs?.map(renderInput)}
+          {inputs?.map((element, index) => renderInput(element, index))}
         </div>
       </div>
     </div>
   );
-};
-
-InputX.propTypes = {
-  inputs: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.oneOf(['text', 'number', 'text-area', 'option', 'file', 'multiInputs']).isRequired,
-      name: PropTypes.string.isRequired,
-      // Add other prop type validations as needed
-    })
-  ).isRequired,
-  name: PropTypes.string,
-  get: PropTypes.func.isRequired,
-  value: PropTypes.object,
 };
 
 export default InputX;

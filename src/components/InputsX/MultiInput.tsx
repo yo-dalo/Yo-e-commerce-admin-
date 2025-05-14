@@ -4,7 +4,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleRemove } from "react-icons/ci";
 
 
-const MultiInput = ({inputs,name,get,value}) => {
+const MultiInput = ({inputs,name,get,value=[]}) => {
     const [loop, setLoop] = useState([1]);
     const [all, setAll] = useState([]);
     
@@ -29,17 +29,14 @@ const addOrReplaceItem = (index, newItem) => {
 
     const add=(index,obj)=>{
    // setAll([...all,obj])
+   console.info(obj);
     addOrReplaceItem(index,obj)
     
     }
 
   useEffect(()=>{
-  
-    get(all)
-  //  get(all)
-    //console.log(all);
- //   setAll({...inputData,...selecterData,...imgFileData})
- // alert(JSON.stringify(all));
+    console.log("value",value);
+   get(all)
   },[all])
   
   
@@ -47,11 +44,11 @@ const addOrReplaceItem = (index, newItem) => {
     <div className="min-w-full flex flex-col gap-1.5">
     <div className="font-semibold py-3"> Multi Input <CiCirclePlus className="text-blue-700" onClick={()=> setLoop([...loop,1])} /> </div>
    {loop.map((i,index)=>(
-   <div className="relative">
+   <div key={index} className="relative">
    <InputX
      name={index}
     inputs={inputs}
-    value={value}
+    value={value[index]}
     get={(data)=>add(index,data)}
     />
     

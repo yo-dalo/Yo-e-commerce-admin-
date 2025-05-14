@@ -2,7 +2,7 @@ import { createContext, useContext, useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Yo from "../common/Helper/Yo"
 import { toast } from 'react-toastify';
-
+import eruda from "eruda"; 
 
 const AuthContext = createContext();
 
@@ -37,6 +37,7 @@ const isLogin= async()=>{
 }
 
  useEffect(() => { 
+   eruda.init();
   isLogin()
   }, []);
 
